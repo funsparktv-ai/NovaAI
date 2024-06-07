@@ -52,20 +52,11 @@
     </form>
 
     <script>
-        const predefinedResponses = {
-            "hello": "Hi there! How can I assist you today?",
-            "how are you": "I'm just a bunch of code, but I'm here to help!",
-            "what is your name": "I'm your friendly AI assistant.",
-            "default": "I'm sorry, I don't have an answer for that. Try searching on Google."
-        };
-
         document.getElementById('searchForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            const query = document.getElementById('query').value.toLowerCase();
+            const query = document.getElementById('query').value;
             addChatMessage('user', query);
-            const response = predefinedResponses[query] || predefinedResponses['default'];
-            addChatMessage('ai', response);
-            document.getElementById('query').value = '';
+            searchGoogle(query);
         });
 
         function addChatMessage(sender, message) {
@@ -77,6 +68,13 @@
             messageElement.appendChild(messageContent);
             chatbox.appendChild(messageElement);
             chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function searchGoogle(query) {
+            const aiResponse = "Let me search that for you...";
+            addChatMessage('ai', aiResponse);
+            const url = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+            window.location.href = url;
         }
     </script>
 </body>
