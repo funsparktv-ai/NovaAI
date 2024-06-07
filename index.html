@@ -7,71 +7,72 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         .chat-container {
-            max-width: 400px;
-            margin: 0 auto;
+            max-width: 600px;
+            width: 100%;
             background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
         .chatbox {
-            height: 400px;
+            height: 70vh;
             overflow-y: auto;
-            padding: 10px;
+            padding: 20px;
         }
-        .chatbox .message {
-            margin-bottom: 10px;
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-start;
         }
-        .chatbox .user .message-content {
-            background-color: #007BFF;
-            color: #fff;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 5px;
-            border-top-left-radius: 5px;
-            padding: 10px;
-            max-width: 70%;
-            float: right;
-        }
-        .chatbox .ai .message-content {
+        .message-content {
             background-color: #f1f1f1;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 5px;
-            border-top-right-radius: 5px;
-            padding: 10px;
+            padding: 15px;
+            border-radius: 10px;
             max-width: 70%;
-            float: left;
         }
-        .chatbox .input-container {
-            padding: 10px;
-            border-top: 1px solid #ccc;
+        .user .message-content {
+            background-color: #007BFF;
+            color: #fff;
+        }
+        .input-container {
+            padding: 20px;
             background-color: #f9f9f9;
+            border-top: 1px solid #ccc;
         }
-        .chatbox .input-container input[type="text"] {
-            width: calc(100% - 20px);
+        input[type="text"] {
+            width: calc(100% - 40px);
             border: none;
             outline: none;
-            padding: 8px;
+            padding: 10px;
             border-radius: 5px;
+            font-size: 16px;
         }
-        .chatbox .input-container button {
+        button {
+            width: 100px;
             background-color: #007BFF;
             color: #fff;
             border: none;
             outline: none;
-            padding: 8px 15px;
+            padding: 10px;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
     <div class="chat-container">
         <div class="chatbox" id="chatbox">
-            <div class="ai message">
+            <div class="message">
                 <div class="message-content">Hello! How can I assist you?</div>
             </div>
         </div>
@@ -85,7 +86,7 @@
         function addMessage(sender, message) {
             const chatbox = document.getElementById('chatbox');
             const messageElement = document.createElement('div');
-            messageElement.classList.add(sender, 'message');
+            messageElement.classList.add('message', sender);
             messageElement.innerHTML = `<div class="message-content">${message}</div>`;
             chatbox.appendChild(messageElement);
             chatbox.scrollTop = chatbox.scrollHeight;
