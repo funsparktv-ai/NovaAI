@@ -70,11 +70,25 @@
             chatbox.scrollTop = chatbox.scrollHeight;
         }
 
-        function searchGoogle(query) {
+        async function searchGoogle(query) {
             const aiResponse = "Let me search that for you...";
             addChatMessage('ai', aiResponse);
-            const url = 'https://www.google.com/search?q=' + encodeURIComponent(query);
-            window.location.href = url;
+
+            // Simulate a search by fetching mock data from a JSON file or an API
+            const response = await fetch('mock-api-url', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ query: query })
+            });
+
+            const data = await response.json();
+            displaySearchResult(data.result);
+        }
+
+        function displaySearchResult(result) {
+            addChatMessage('ai', result);
         }
     </script>
 </body>
