@@ -260,6 +260,11 @@
             const query = document.getElementById('learnMoreButton').getAttribute('data-query');
             window.open(`https://en.wikipedia.org/wiki/${encodeURIComponent(query)}`, '_blank');
         }
+
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+        }
     </script>
 </body>
 </html>
