@@ -94,6 +94,18 @@
             text-decoration: underline;
             cursor: pointer;
         }
+        .dark-mode-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            outline: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -116,7 +128,9 @@
     <div class="learn-more" id="learnMore" style="display: none;">
         <button id="learnMoreButton" onclick="openWikipediaPage()" style="display: none;">Learn More</button>
     </div>
-
+    <!-- Dark mode button -->
+    <button class="dark-mode-button" onclick="toggleDarkMode()">Dark Mode</button>
+    
     <script>
         async function getAIResponse(query) {
             const defaultResponses = {
