@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-like Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .chatbox {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 300px;
+            margin-bottom: 20px;
+            height: 300px;
+            overflow-y: scroll;
+        }
+        .user, .ai {
+            margin: 10px 0;
+        }
+        .user {
+            text-align: right;
+        }
+        .ai {
+            text-align: left;
+        }
+        .ai span, .user span {
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .ai span {
+            background-color: #f1f1f1;
+        }
+        .user span {
+            background-color: #007BFF;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI-like Search</h1>
+    <div class="chatbox" id="chatbox">
+        <!-- Chat messages will appear here -->
+    </div>
+    <form id="searchForm">
+        <label for="query">Enter your query:</label>
+        <input type="text" id="query" name="query" required>
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+        const predefinedResponses = {
+            "hello": "Hi there! How can I assist you today?",
+            "how are you": "I'm just a bunch of code, but I'm here to help!",
+            "what is your name": "I'm your friendly AI assistant.",
+            "default": "I'm sorry, I don't have an answer for that. Try searching on Google."
+        };
+
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const query = document.getElementById('query').value.toLowerCase();
+            addChatMessage('user', query);
+            const response = predefinedResponses[query] || predefinedResponses['default'];
+            addChatMessage('ai', response);
+            document.getElementById('query').value = '';
+        });
+
+        function addChatMessage(sender, message) {
+            const chatbox = document.getElementById('chatbox');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add(sender);
+            const messageContent = document.createElement('span');
+            messageContent.innerText = message;
+            messageElement.appendChild(messageContent);
+            chatbox.appendChild(messageElement);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
