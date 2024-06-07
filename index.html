@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lizabot 3</title>
+    <title>NovaAI</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,7 +11,7 @@
             padding: 0;
             background-color: #f4f4f4;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
         }
@@ -22,9 +22,10 @@
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            margin-bottom: 20px;
         }
         .chatbox {
-            height: 70vh;
+            height: 60vh;
             overflow-y: auto;
             padding: 20px;
             background-color: #f4f4f4;
@@ -73,16 +74,24 @@
             font-size: 16px;
         }
         .learn-more {
-            text-align: center;
             margin-top: 20px;
         }
-        .learn-more a {
-            color: #007BFF;
-            text-decoration: none;
+        .learn-more button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            outline: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
+    <div class="learn-more" id="learnMore" style="display: none;">
+        <button id="learnMoreButton" onclick="openWikipediaPage()" style="display: none;">Learn More</button>
+    </div>
     <div class="chat-container">
         <div class="chatbox" id="chatbox">
             <div class="message">
@@ -94,7 +103,6 @@
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
-    <div class="learn-more" id="learnMore"></div>
 
     <script>
         function addMessage(sender, message) {
@@ -131,8 +139,15 @@
         }
 
         function showLearnMore(query) {
-            const learnMore = document.getElementById('learnMore');
-            learnMore.innerHTML = `<a href="https://en.wikipedia.org/wiki/${encodeURIComponent(query)}" target="_blank">Learn More</a>`;
+            const learnMoreButton = document.getElementById('learnMoreButton');
+            learnMoreButton.style.display = 'inline-block';
+            learnMoreButton.setAttribute('data-query', query);
+            document.getElementById('learnMore').style.display = 'block';
+        }
+
+        function openWikipediaPage() {
+            const query = document.getElementById('learnMoreButton').getAttribute('data-query');
+            window.open(`https://en.wikipedia.org/wiki/${encodeURIComponent(query)}`, '_blank');
         }
     </script>
 </body>
