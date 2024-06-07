@@ -15,6 +15,12 @@
             align-items: center;
             height: 100vh;
         }
+        header {
+            background-color: #007BFF;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
         .chat-container {
             max-width: 600px;
             width: 100%;
@@ -76,22 +82,18 @@
         .learn-more {
             margin-top: 20px;
         }
-        .learn-more button {
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            outline: none;
-            padding: 10px;
-            border-radius: 5px;
+        .learn-more a {
+            color: #007BFF;
+            text-decoration: underline;
             cursor: pointer;
-            font-size: 16px;
         }
     </style>
 </head>
 <body>
-    <div class="learn-more" id="learnMore" style="display: none;">
-        <button id="learnMoreButton" onclick="openWikipediaPage()" style="display: none;">Learn More</button>
-    </div>
+    <header>
+        <h1>Nova AI</h1>
+    </header>
+
     <div class="chat-container">
         <div class="chatbox" id="chatbox">
             <div class="message">
@@ -99,17 +101,21 @@
             </div>
         </div>
         <div class="input-container">
-            <input type="text" id="query" placeholder="Type your message...">
+            <input type="text" id="query" placeholder="Ask NovaAI a meaning of a word!.">
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
 
     <script>
-        function addMessage(sender, message) {
+        function addMessage(sender, message, learnMoreQuery) {
             const chatbox = document.getElementById('chatbox');
             const messageElement = document.createElement('div');
             messageElement.classList.add('message', sender);
-            messageElement.innerHTML = `<div class="message-content">${message}</div>`;
+            let messageContent = `<div class="message-content">${message}</div>`;
+            if (learnMoreQuery) {
+                messageContent += `<a href="https://en.wikipedia.org/wiki/${encodeURIComponent(learnMoreQuery)}" target="_blank">Learn More</a>`;
+            }
+            messageElement.innerHTML = messageContent;
             chatbox.appendChild(messageElement);
             chatbox.scrollTop = chatbox.scrollHeight;
         }
@@ -120,8 +126,7 @@
             addMessage('user', query);
             document.getElementById('query').value = '';
             const aiResponse = await getAIResponse(query);
-            addMessage('ai', aiResponse);
-            showLearnMore(query);
+            addMessage('ai', aiResponse, query); // Pass query to include Learn More link
         }
 
         async function getAIResponse(query) {
@@ -136,18 +141,6 @@
             } catch (error) {
                 return 'Sorry, there was an error processing your request.';
             }
-        }
-
-        function showLearnMore(query) {
-            const learnMoreButton = document.getElementById('learnMoreButton');
-            learnMoreButton.style.display = 'inline-block';
-            learnMoreButton.setAttribute('data-query', query);
-            document.getElementById('learnMore').style.display = 'block';
-        }
-
-        function openWikipediaPage() {
-            const query = document.getElementById('learnMoreButton').getAttribute('data-query');
-            window.open(`https://en.wikipedia.org/wiki/${encodeURIComponent(query)}`, '_blank');
         }
     </script>
 </body>
