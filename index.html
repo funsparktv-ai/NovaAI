@@ -132,52 +132,18 @@
     
     <script>
         async function getAIResponse(query) {
-            const defaultResponses = {
-                "Who is the president of the United States?": "As an AI, I don't have access to real-time information, so I can't provide the current president. Please check a reliable news source for the latest updates.",
-                "What is the square root of 64?": "The square root of 64 is 8.",
-                "What is the largest mammal on Earth?": "The largest mammal on Earth is the blue whale.",
-                "What is the speed of light?": "The speed of light in a vacuum is approximately 299,792 kilometers per second (km/s).",
-                "What is the capital of Japan?": "The capital of Japan is Tokyo.",
-                "Tell me about AI ethics": "AI ethics is a field that deals with the moral and ethical implications of artificial intelligence and its applications.",
-                "What is the meaning of AI safety?": "AI safety refers to efforts to ensure that artificial intelligence systems are developed and deployed in a way that minimizes risks and ensures their safe operation.",
-                "What are neural networks?": "Neural networks are a type of machine learning model inspired by the structure and function of the human brain.",
-                "What is the color of the sky?": "The color of the sky is blue due to the scattering of sunlight by the Earth's atmosphere.",
-                "What is the tallest mountain in the world?": "The tallest mountain in the world is Mount Everest.",
-                "Tell me about virtual reality": "Virtual reality is a technology that allows users to experience and interact with a computer-generated simulated environment.",
-                "What is the biggest planet in our solar system?": "The biggest planet in our solar system is Jupiter.",
-                "What is the smallest particle in the universe?": "The smallest particle in the universe is currently believed to be quarks, which are elementary particles and a fundamental constituent of matter.",
-                "What is the capital of India?": "The capital of India is New Delhi.",
-                "Tell me about nanotechnology": "Nanotechnology is the manipulation and study of matter at the nanoscale, typically in the range of 1 to 100 nanometers.",
-                "What is the boiling point of water?": "The boiling point of water at sea level is 100 degrees Celsius (212 degrees Fahrenheit).",
-                "What is the currency of Japan?": "The currency of Japan is the Japanese yen (¥).",
-                "Tell me about renewable energy": "Renewable energy is energy that comes from naturally replenished sources, such as sunlight, wind, and water, and is considered environmentally friendly.",
-                "What is the chemical symbol for water?": "The chemical symbol for water is H2O.",
-                "What is the largest ocean on Earth?": "The largest ocean on Earth is the Pacific Ocean.",
-                "What is the capital of Brazil?": "The capital of Brazil is Brasília.",
-                "Tell me about quantum computing": "Quantum computing is a branch of computing that uses quantum-mechanical phenomena, such as superposition and entanglement, to perform operations.",
-                "What is the formula for the area of a circle?": "The formula for the area of a circle is A = πr^2, where A is the area and r is the radius of the circle.",
-                "What is the meaning of the word 'technology'?": "Technology refers to the application of scientific knowledge for practical purposes, especially in industry and commerce.",
-                "Tell me about global warming": "Global warming is the long-term increase in Earth's average surface temperature due to human activities, primarily the release of greenhouse gases.",
-                "What is the tallest building in the world?": "As of my last update, the tallest building in the world is the Burj Khalifa in Dubai, United Arab Emirates.",
-                "What is the capital of China?": "The capital of China is Beijing.",
-                "Tell me about cybersecurity": "Cybersecurity refers to the protection of computer systems and networks from theft, damage, or unauthorized access to data.",
-                "What is the boiling point of nitrogen?": "The boiling point of nitrogen is approximately -195.79 degrees Celsius (-320.42 degrees Fahrenheit).",
-                "What is the chemical symbol for oxygen?": "The chemical symbol for oxygen is O.",
-                "What is the population of the United States?": "As of my last update, the population of the United States is over 331 million people.",
-                "What is the meaning of the word 'artificial'?": "The word 'artificial' refers to something that is made or produced by human beings, often to imitate or replace something natural.",
-                "robotics": "Robotics is the interdisciplinary field that involves the design, construction, operation, and application of robots.",
-                "What is the capital of Russia?": "The capital of Russia is Moscow.",
-                "What is the freezing point of water?": "The freezing point of water at sea level is 0 degrees Celsius (32 degrees Fahrenheit).",
-                "What is the currency of the United Kingdom?": "The currency of the United Kingdom is the British pound sterling (£).",
-                "the internet of things (IoT)": "The Internet of Things (IoT) refers to the network of physical devices, vehicles, appliances, and other objects embedded with sensors and software that enables them to connect and exchange data over the internet.",
-                "What is the smallest country in the world?": "The smallest country in the world by land area is Vatican City.",
-                "What is the capital of Canada?": "The capital of Canada is Ottawa.",
-                "Tell me about artificial intelligence": "Artificial intelligence (AI) refers to the simulation of human intelligence in machines that are programmed to think and learn like humans.",
-                "What is the largest desert in the world?": "The largest desert in the world is the Antarctic Desert, followed by the Arctic Desert. The largest hot desert is the Sahara Desert."
-            };
-            
-            // Return a default response if available
-            return defaultResponses[query] || "I'm not sure how to answer that. Please try asking something else.";
+            try {
+                const response = await fetch('https://ai.milosantos.com/blackbox', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messages: [{"role":"user","content": query}] })
+                });
+                const data = await response.json();
+                return data.choices[0].message.content;
+            } catch (error) {
+                console.error('Error:', error);
+                return 'Error';
+            }
         }
 
         function sendMessage() {
